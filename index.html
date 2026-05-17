@@ -5,23 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>CoinsX Admin Panel</title>
 
-<!-- ═══════════════════════════════════════
-     🔧 FIREBASE CONFIG — এখানে বসাও
-═══════════════════════════════════════ -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getDatabase, ref, get, set, update, push, remove, onValue, serverTimestamp }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
   const firebaseConfig = {
-  apiKey: "AIzaSyCmP_6ZPNGdN-yfYZI6wS4RND060GvU5X8",
-  authDomain: "coinsx-37627.firebaseapp.com",
-  databaseURL: "https://coinsx-37627-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "coinsx-37627",
-  storageBucket: "coinsx-37627.firebasestorage.app",
-  messagingSenderId: "350724225963",
-  appId: "1:350724225963:web:06c0af919258dbd82c70ee"
-};
+    apiKey: "AIzaSyCmP_6ZPNGdN-yfYZI6wS4RND060GvU5X8",
+    authDomain: "coinsx-37627.firebaseapp.com",
+    databaseURL: "https://coinsx-37627-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "coinsx-37627",
+    storageBucket: "coinsx-37627.firebasestorage.app",
+    messagingSenderId: "350724225963",
+    appId: "1:350724225963:web:06c0af919258dbd82c70ee"
+  };
 
   const app = initializeApp(firebaseConfig);
   const db  = getDatabase(app);
@@ -34,14 +31,14 @@
   window._remove      = remove;
   window._onValue     = onValue;
   window._firebaseReady = true;
-  document.dispatchEvent(new Event("firebaseReady"));
+  /* ── KEY FIX ── */
+  setTimeout(() => document.dispatchEvent(new Event("firebaseReady")), 0);
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800;900&family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* ══ RESET ══ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--card:#1c2128;
@@ -51,97 +48,49 @@
   --radius:12px;--radius-sm:8px;
   --font-bn:'Noto Sans Bengali',sans-serif;--font-en:'Exo 2',sans-serif;
 }
-html,body{height:100%;background:var(--bg);color:var(--text);
-  font-family:var(--font-bn);overflow-x:hidden;}
-::-webkit-scrollbar{width:6px;}
-::-webkit-scrollbar-track{background:var(--bg2);}
-::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:6px;}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font-bn);overflow-x:hidden;}
+::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--bg2);}::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:6px;}
 
-/* ══ LAYOUT ══ */
 .layout{display:flex;min-height:100vh;}
-.sidebar{
-  width:220px;background:var(--bg2);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:10;
-}
+.sidebar{width:220px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:10;}
 .main{margin-left:220px;flex:1;padding:24px;}
 
-/* sidebar */
-.logo{
-  padding:20px 16px 16px;
-  font-family:var(--font-en);font-weight:900;font-size:20px;
-  background:linear-gradient(90deg,var(--gold),var(--blue));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  border-bottom:1px solid var(--border);
-}
+.logo{padding:20px 16px 16px;font-family:var(--font-en);font-weight:900;font-size:20px;background:linear-gradient(90deg,var(--gold),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;border-bottom:1px solid var(--border);}
 .logo span{font-size:11px;display:block;-webkit-text-fill-color:var(--text2);margin-top:2px;font-weight:400;}
-.nav-item{
-  display:flex;align-items:center;gap:10px;padding:11px 16px;
-  color:var(--text2);cursor:pointer;transition:background .15s,color .15s;
-  font-size:13px;border-radius:0;
-}
+.nav-item{display:flex;align-items:center;gap:10px;padding:11px 16px;color:var(--text2);cursor:pointer;transition:background .15s,color .15s;font-size:13px;}
 .nav-item:hover{background:var(--bg3);color:var(--text);}
 .nav-item.active{background:rgba(88,166,255,.1);color:var(--blue);border-right:2px solid var(--blue);}
 .nav-icon{font-size:16px;width:20px;text-align:center;}
 .sidebar-footer{margin-top:auto;padding:12px 16px;font-size:11px;color:var(--text2);border-top:1px solid var(--border);}
 
-/* ══ HEADER ══ */
-.page-header{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:20px;
-}
+.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
 .page-title{font-family:var(--font-en);font-weight:800;font-size:22px;}
-.badge{
-  font-family:var(--font-en);font-size:11px;font-weight:700;
-  padding:3px 10px;border-radius:20px;
-}
+.badge{font-family:var(--font-en);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;}
 .badge-gold{background:rgba(245,200,66,.15);color:var(--gold);}
 .badge-green{background:rgba(63,185,80,.15);color:var(--green);}
 .badge-red{background:rgba(248,81,73,.15);color:var(--red);}
 .badge-blue{background:rgba(88,166,255,.15);color:var(--blue);}
 
-/* ══ STATS ══ */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
-.stat-card{
-  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-  padding:16px;
-}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;}
 .stat-label{font-size:11px;color:var(--text2);margin-bottom:6px;font-weight:600;letter-spacing:.5px;}
 .stat-value{font-family:var(--font-en);font-weight:800;font-size:24px;}
 .stat-sub{font-size:11px;color:var(--text2);margin-top:4px;}
 
-/* ══ CARD ══ */
-.panel{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius);margin-bottom:16px;overflow:hidden;
-}
-.panel-head{
-  padding:14px 18px;border-bottom:1px solid var(--border);
-  display:flex;justify-content:space-between;align-items:center;
-  font-family:var(--font-en);font-weight:700;font-size:14px;
-}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:hidden;}
+.panel-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-family:var(--font-en);font-weight:700;font-size:14px;}
 .panel-body{padding:18px;}
 
-/* ══ FORMS ══ */
 .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
 .form-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
 .form-group{display:flex;flex-direction:column;gap:6px;}
 .form-group.full{grid-column:1/-1;}
 label{font-size:12px;color:var(--text2);font-weight:600;}
-input[type=text],input[type=number],input[type=url],input[type=password],select,textarea{
-  background:var(--bg3);border:1px solid var(--border);
-  border-radius:var(--radius-sm);padding:10px 12px;
-  color:var(--text);font-size:13px;outline:none;font-family:var(--font-bn);
-  transition:border-color .2s;width:100%;
-}
+input[type=text],input[type=number],input[type=url],input[type=password],select,textarea{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;color:var(--text);font-size:13px;outline:none;font-family:var(--font-bn);transition:border-color .2s;width:100%;}
 input:focus,select:focus,textarea:focus{border-color:var(--blue);}
 textarea{resize:vertical;min-height:70px;}
 
-/* ══ BUTTONS ══ */
-.btn{
-  padding:9px 16px;border:none;border-radius:var(--radius-sm);
-  font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font-bn);
-  transition:filter .2s,transform .1s;display:inline-flex;align-items:center;gap:6px;
-}
+.btn{padding:9px 16px;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font-bn);transition:filter .2s,transform .1s;display:inline-flex;align-items:center;gap:6px;}
 .btn:active{transform:scale(.97);}
 .btn-primary{background:var(--blue);color:#fff;}
 .btn-gold{background:var(--gold);color:#000;}
@@ -151,113 +100,58 @@ textarea{resize:vertical;min-height:70px;}
 .btn:hover{filter:brightness(1.1);}
 .btn-sm{padding:5px 10px;font-size:11px;}
 
-/* ══ TABLE ══ */
 .table-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;font-size:13px;}
-th{
-  background:var(--bg3);padding:10px 12px;text-align:left;
-  font-family:var(--font-en);font-weight:700;font-size:11px;
-  color:var(--text2);letter-spacing:.5px;text-transform:uppercase;
-  border-bottom:1px solid var(--border);
-}
+th{background:var(--bg3);padding:10px 12px;text-align:left;font-family:var(--font-en);font-weight:700;font-size:11px;color:var(--text2);letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--border);}
 td{padding:11px 12px;border-bottom:1px solid rgba(48,54,61,.5);vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
 tr:hover td{background:rgba(255,255,255,.02);}
 .td-actions{display:flex;gap:6px;flex-wrap:wrap;}
 
-/* status pills */
-.pill{
-  font-family:var(--font-en);font-size:11px;font-weight:700;
-  padding:3px 8px;border-radius:20px;
-}
+.pill{font-family:var(--font-en);font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;}
 .pill-pending{background:rgba(245,200,66,.15);color:var(--gold);}
 .pill-approved{background:rgba(63,185,80,.15);color:var(--green);}
 .pill-rejected{background:rgba(248,81,73,.15);color:var(--red);}
 .pill-active{background:rgba(63,185,80,.15);color:var(--green);}
 .pill-blocked{background:rgba(248,81,73,.15);color:var(--red);}
 
-/* ══ PAGES ══ */
 .panel-page{display:none;}
 .panel-page.active{display:block;}
 
-/* ══ SEARCH BAR ══ */
-.search-bar{
-  display:flex;gap:8px;margin-bottom:14px;
-}
+.search-bar{display:flex;gap:8px;margin-bottom:14px;}
 .search-bar input{flex:1;max-width:300px;}
 
-/* ══ TOAST ══ */
-.toast{
-  position:fixed;top:20px;right:20px;z-index:9999;
-  background:var(--card);border:1px solid var(--border);
-  border-radius:10px;padding:12px 18px;
-  font-size:13px;font-weight:600;
-  transform:translateX(120%);transition:transform .3s cubic-bezier(.34,1.56,.64,1);
-  max-width:300px;
-}
+.toast{position:fixed;top:20px;right:20px;z-index:9999;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 18px;font-size:13px;font-weight:600;transform:translateX(120%);transition:transform .3s cubic-bezier(.34,1.56,.64,1);max-width:300px;}
 .toast.show{transform:translateX(0);}
 .toast.success{border-color:var(--green);color:var(--green);}
 .toast.error{border-color:var(--red);color:var(--red);}
 
-/* ══ LOGIN ══ */
-#loginScreen{
-  position:fixed;inset:0;z-index:9999;
-  background:var(--bg);display:flex;align-items:center;justify-content:center;
-}
-.login-box{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:16px;padding:32px 28px;width:320px;text-align:center;
-}
-.login-logo{
-  font-family:var(--font-en);font-weight:900;font-size:28px;
-  background:linear-gradient(90deg,var(--gold),var(--blue));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  margin-bottom:4px;
-}
+#loginScreen{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;}
+.login-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px 28px;width:320px;text-align:center;}
+.login-logo{font-family:var(--font-en);font-weight:900;font-size:28px;background:linear-gradient(90deg,var(--gold),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;}
 .login-sub{font-size:12px;color:var(--text2);margin-bottom:24px;}
 
-/* ══ SPINNER ══ */
-.spinner{
-  width:32px;height:32px;border:3px solid var(--border);
-  border-top-color:var(--gold);border-radius:50%;
-  animation:spin .8s linear infinite;display:inline-block;
-}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;display:inline-block;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .loader-row td{text-align:center;padding:30px;color:var(--text2);}
 
-/* Mobile responsive */
-@media(max-width:768px){
-  .sidebar{width:200px;}
-  .main{margin-left:200px;}
-  .stats-grid{grid-template-columns:1fr 1fr;}
-  .form-grid{grid-template-columns:1fr;}
-  .form-grid-3{grid-template-columns:1fr;}
-}
-@media(max-width:600px){
-  .sidebar{display:none;}
-  .main{margin-left:0;}
-}
-
-/* select checkbox */
 input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--blue);}
 .row-check{width:36px;}
-
-/* bulk action bar */
-.bulk-bar{
-  display:none;background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.3);
-  border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:12px;
-  align-items:center;gap:10px;font-size:13px;
-}
+.bulk-bar{display:none;background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.3);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:12px;align-items:center;gap:10px;font-size:13px;}
 .bulk-bar.visible{display:flex;}
+
+@media(max-width:768px){.sidebar{width:200px;}.main{margin-left:200px;}.stats-grid{grid-template-columns:1fr 1fr;}.form-grid{grid-template-columns:1fr;}.form-grid-3{grid-template-columns:1fr;}}
+@media(max-width:600px){.sidebar{display:none;}.main{margin-left:0;}}
 </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
+<!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-logo">CoinsX</div>
     <div class="login-sub">Admin Panel — অ্যাডমিন লগইন</div>
+    <div id="loginLoading" style="color:var(--text2);font-size:12px;margin-bottom:12px;">Firebase লোড হচ্ছে...</div>
     <div class="form-group" style="margin-bottom:12px;">
       <label>পাসওয়ার্ড</label>
       <input type="password" id="loginPass" placeholder="পাসওয়ার্ড লিখুন" onkeydown="if(event.key==='Enter')doLogin()">
@@ -269,106 +163,65 @@ input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--bl
 
 <!-- MAIN APP -->
 <div class="layout" id="mainApp" style="display:none;">
-  <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="logo">CoinsX <span>Admin Panel</span></div>
-    <div class="nav-item active" onclick="showPage('dashboard')">
-      <span class="nav-icon">📊</span> ড্যাশবোর্ড
-    </div>
-    <div class="nav-item" onclick="showPage('withdrawals')">
-      <span class="nav-icon">💸</span> উইথড্র রিকোয়েস্ট
-    </div>
-    <div class="nav-item" onclick="showPage('users')">
-      <span class="nav-icon">👥</span> ইউজার ম্যানেজ
-    </div>
-    <div class="nav-item" onclick="showPage('config')">
-      <span class="nav-icon">⚙️</span> এড ও কনফিগ
-    </div>
-    <div class="nav-item" onclick="showPage('tasks')">
-      <span class="nav-icon">✅</span> টাস্ক ম্যানেজ
-    </div>
-    <div class="nav-item" onclick="showPage('help')">
-      <span class="nav-icon">❓</span> সাহায্য আইটেম
-    </div>
+    <div class="nav-item active" onclick="showPage('dashboard',event)"><span class="nav-icon">📊</span> ড্যাশবোর্ড</div>
+    <div class="nav-item" onclick="showPage('withdrawals',event)"><span class="nav-icon">💸</span> উইথড্র রিকোয়েস্ট</div>
+    <div class="nav-item" onclick="showPage('users',event)"><span class="nav-icon">👥</span> ইউজার ম্যানেজ</div>
+    <div class="nav-item" onclick="showPage('config',event)"><span class="nav-icon">⚙️</span> এড ও কনফিগ</div>
+    <div class="nav-item" onclick="showPage('tasks',event)"><span class="nav-icon">✅</span> টাস্ক ম্যানেজ</div>
+    <div class="nav-item" onclick="showPage('help',event)"><span class="nav-icon">❓</span> সাহায্য আইটেম</div>
     <div class="sidebar-footer">
       <div>CoinsX v1.0</div>
       <button class="btn btn-ghost btn-sm" style="margin-top:8px;width:100%;justify-content:center;" onclick="logout()">লগআউট</button>
     </div>
   </div>
 
-  <!-- MAIN -->
   <div class="main">
 
-    <!-- ════ DASHBOARD ════ -->
+    <!-- DASHBOARD -->
     <div class="panel-page active" id="pg-dashboard">
       <div class="page-header">
         <div class="page-title">📊 ড্যাশবোর্ড</div>
         <button class="btn btn-ghost btn-sm" onclick="loadDashboard()">🔄 রিফ্রেশ</button>
       </div>
       <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-label">মোট ইউজার</div>
-          <div class="stat-value" id="statUsers">—</div>
-          <div class="stat-sub">নিবন্ধিত</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">মোট পেমেন্ট</div>
-          <div class="stat-value" style="color:var(--gold)" id="statPaid">—</div>
-          <div class="stat-sub">অনুমোদিত</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">পেন্ডিং রিকোয়েস্ট</div>
-          <div class="stat-value" style="color:var(--red)" id="statPending">—</div>
-          <div class="stat-sub">অপেক্ষমান</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">মোট রেফার</div>
-          <div class="stat-value" style="color:var(--purple)" id="statRefer">—</div>
-          <div class="stat-sub">সফল রেফার</div>
-        </div>
+        <div class="stat-card"><div class="stat-label">মোট ইউজার</div><div class="stat-value" id="statUsers">—</div><div class="stat-sub">নিবন্ধিত</div></div>
+        <div class="stat-card"><div class="stat-label">মোট পেমেন্ট</div><div class="stat-value" style="color:var(--gold)" id="statPaid">—</div><div class="stat-sub">অনুমোদিত</div></div>
+        <div class="stat-card"><div class="stat-label">পেন্ডিং রিকোয়েস্ট</div><div class="stat-value" style="color:var(--red)" id="statPending">—</div><div class="stat-sub">অপেক্ষমান</div></div>
+        <div class="stat-card"><div class="stat-label">মোট রেফার</div><div class="stat-value" style="color:var(--purple)" id="statRefer">—</div><div class="stat-sub">সফল রেফার</div></div>
       </div>
-
-      <!-- Recent Withdrawals -->
       <div class="panel">
         <div class="panel-head">⏳ সাম্প্রতিক পেন্ডিং উইথড্র</div>
         <div class="panel-body">
           <div class="table-wrap">
             <table>
-              <thead><tr>
-                <th>নাম</th><th>মেথড</th><th>নম্বর</th><th>পরিমাণ</th><th>তারিখ</th><th>অ্যাকশন</th>
-              </tr></thead>
-              <tbody id="recentWithdrawals">
-                <tr class="loader-row"><td colspan="6"><div class="spinner"></div></td></tr>
-              </tbody>
+              <thead><tr><th>নাম</th><th>মেথড</th><th>নম্বর</th><th>পরিমাণ</th><th>তারিখ</th><th>অ্যাকশন</th></tr></thead>
+              <tbody id="recentWithdrawals"><tr class="loader-row"><td colspan="6"><div class="spinner"></div></td></tr></tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ════ WITHDRAWALS ════ -->
+    <!-- WITHDRAWALS -->
     <div class="panel-page" id="pg-withdrawals">
       <div class="page-header">
         <div class="page-title">💸 উইথড্র রিকোয়েস্ট</div>
         <div style="display:flex;gap:8px;">
           <select id="wFilter" onchange="loadWithdrawals()" style="width:auto;">
-            <option value="pending">পেন্ডিং</option>
-            <option value="approved">অনুমোদিত</option>
-            <option value="rejected">বাতিল</option>
-            <option value="all">সব</option>
+            <option value="pending">পেন্ডিং</option><option value="approved">অনুমোদিত</option>
+            <option value="rejected">বাতিল</option><option value="all">সব</option>
           </select>
           <button class="btn btn-ghost btn-sm" onclick="loadWithdrawals()">🔄</button>
         </div>
       </div>
-
-      <!-- Bulk actions -->
       <div class="bulk-bar" id="bulkBar">
         <input type="checkbox" id="selectAll" onchange="toggleAll(this)">
         <span id="selectedCount">0 সিলেক্ট</span>
         <button class="btn btn-green btn-sm" onclick="bulkApprove()">✅ বাল্ক অনুমোদন</button>
         <button class="btn btn-red btn-sm" onclick="bulkReject()">❌ বাল্ক বাতিল</button>
       </div>
-
       <div class="panel">
         <div class="panel-body" style="padding:0;">
           <div class="table-wrap">
@@ -377,16 +230,14 @@ input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--bl
                 <th class="row-check"><input type="checkbox" id="selectAllHead" onchange="toggleAll(this)"></th>
                 <th>নাম / UID</th><th>মেথড</th><th>নম্বর</th><th>পরিমাণ</th><th>তারিখ</th><th>স্ট্যাটাস</th><th>অ্যাকশন</th>
               </tr></thead>
-              <tbody id="withdrawalTable">
-                <tr class="loader-row"><td colspan="8"><div class="spinner"></div></td></tr>
-              </tbody>
+              <tbody id="withdrawalTable"><tr class="loader-row"><td colspan="8"><div class="spinner"></div></td></tr></tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ════ USERS ════ -->
+    <!-- USERS -->
     <div class="panel-page" id="pg-users">
       <div class="page-header">
         <div class="page-title">👥 ইউজার ম্যানেজ</div>
@@ -399,87 +250,49 @@ input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--bl
         <div class="panel-body" style="padding:0;">
           <div class="table-wrap">
             <table>
-              <thead><tr>
-                <th>নাম</th><th>UID</th><th>ব্যালেন্স</th><th>মোট আয়</th><th>রেফার</th><th>যোগদান</th><th>স্ট্যাটাস</th><th>অ্যাকশন</th>
-              </tr></thead>
-              <tbody id="userTable">
-                <tr class="loader-row"><td colspan="8"><div class="spinner"></div></td></tr>
-              </tbody>
+              <thead><tr><th>নাম</th><th>UID</th><th>ব্যালেন্স</th><th>মোট আয়</th><th>রেফার</th><th>যোগদান</th><th>স্ট্যাটাস</th><th>অ্যাকশন</th></tr></thead>
+              <tbody id="userTable"><tr class="loader-row"><td colspan="8"><div class="spinner"></div></td></tr></tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ════ CONFIG ════ -->
+    <!-- CONFIG -->
     <div class="panel-page" id="pg-config">
       <div class="page-header">
         <div class="page-title">⚙️ কনফিগারেশন</div>
         <button class="btn btn-gold" onclick="saveConfig()">💾 সেভ করুন</button>
       </div>
-
-      <!-- Ad Settings -->
       <div class="panel">
         <div class="panel-head">📺 এড সেটিংস</div>
         <div class="panel-body">
           <div class="form-grid-3" style="margin-bottom:16px;">
-            <div class="form-group">
-              <label>Adsterra Direct Link</label>
-              <input type="url" id="cfg_ad1Link" placeholder="https://...">
-            </div>
-            <div class="form-group">
-              <label>Adsterra এড আয় (৳)</label>
-              <input type="number" id="cfg_ad1Earn" placeholder="0.50" step="0.01" min="0">
-            </div>
-            <div class="form-group">
-              <label>Adsterra কুলডাউন (সেকেন্ড)</label>
-              <input type="number" id="cfg_ad1Cooldown" placeholder="60" min="0">
-            </div>
+            <div class="form-group"><label>Adsterra Direct Link</label><input type="url" id="cfg_ad1Link" placeholder="https://..."></div>
+            <div class="form-group"><label>Adsterra এড আয় (৳)</label><input type="number" id="cfg_ad1Earn" placeholder="0.50" step="0.01" min="0"></div>
+            <div class="form-group"><label>Adsterra কুলডাউন (সেকেন্ড)</label><input type="number" id="cfg_ad1Cooldown" placeholder="60" min="0"></div>
           </div>
           <div class="form-grid-3">
-            <div class="form-group">
-              <label>Monetag Zone ID</label>
-              <input type="text" id="cfg_ad2Zone" placeholder="1234567">
-            </div>
-            <div class="form-group">
-              <label>Monetag এড আয় (৳)</label>
-              <input type="number" id="cfg_ad2Earn" placeholder="1.00" step="0.01" min="0">
-            </div>
-            <div class="form-group">
-              <label>Monetag কুলডাউন (সেকেন্ড)</label>
-              <input type="number" id="cfg_ad2Cooldown" placeholder="120" min="0">
-            </div>
+            <div class="form-group"><label>Monetag Zone ID</label><input type="text" id="cfg_ad2Zone" placeholder="1234567"></div>
+            <div class="form-group"><label>Monetag এড আয় (৳)</label><input type="number" id="cfg_ad2Earn" placeholder="1.00" step="0.01" min="0"></div>
+            <div class="form-group"><label>Monetag কুলডাউন (সেকেন্ড)</label><input type="number" id="cfg_ad2Cooldown" placeholder="120" min="0"></div>
           </div>
         </div>
       </div>
-
-      <!-- General Settings -->
       <div class="panel">
         <div class="panel-head">🔧 সাধারণ সেটিংস</div>
         <div class="panel-body">
           <div class="form-grid">
-            <div class="form-group">
-              <label>সর্বনিম্ন উইথড্র (৳)</label>
-              <input type="number" id="cfg_minWithdraw" placeholder="50" min="1">
-            </div>
-            <div class="form-group">
-              <label>রেফার বোনাস (৳)</label>
-              <input type="number" id="cfg_referEarn" placeholder="5" step="0.01" min="0">
-            </div>
-            <div class="form-group">
-              <label>সাপোর্ট টেলিগ্রাম লিংক</label>
-              <input type="url" id="cfg_supportLink" placeholder="https://t.me/...">
-            </div>
-            <div class="form-group">
-              <label>অ্যাডমিন পাসওয়ার্ড পরিবর্তন</label>
-              <input type="password" id="cfg_adminPass" placeholder="নতুন পাসওয়ার্ড (খালি রাখলে পরিবর্তন হবে না)">
-            </div>
+            <div class="form-group"><label>সর্বনিম্ন উইথড্র (৳)</label><input type="number" id="cfg_minWithdraw" placeholder="50" min="1"></div>
+            <div class="form-group"><label>রেফার বোনাস (৳)</label><input type="number" id="cfg_referEarn" placeholder="5" step="0.01" min="0"></div>
+            <div class="form-group"><label>সাপোর্ট টেলিগ্রাম লিংক</label><input type="url" id="cfg_supportLink" placeholder="https://t.me/..."></div>
+            <div class="form-group"><label>অ্যাডমিন পাসওয়ার্ড পরিবর্তন</label><input type="password" id="cfg_adminPass" placeholder="নতুন পাসওয়ার্ড (খালি রাখলে পরিবর্তন হবে না)"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ════ TASKS ════ -->
+    <!-- TASKS -->
     <div class="panel-page" id="pg-tasks">
       <div class="page-header">
         <div class="page-title">✅ টাস্ক ম্যানেজ</div>
@@ -489,45 +302,22 @@ input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--bl
         <div class="panel-body" style="padding:0;">
           <div class="table-wrap">
             <table>
-              <thead><tr>
-                <th>আইকন</th><th>নাম</th><th>বিবরণ</th><th>রিওয়ার্ড</th><th>লিংক</th><th>অ্যাকশন</th>
-              </tr></thead>
-              <tbody id="taskTable">
-                <tr class="loader-row"><td colspan="6"><div class="spinner"></div></td></tr>
-              </tbody>
+              <thead><tr><th>আইকন</th><th>নাম</th><th>বিবরণ</th><th>রিওয়ার্ড</th><th>লিংক</th><th>অ্যাকশন</th></tr></thead>
+              <tbody id="taskTable"><tr class="loader-row"><td colspan="6"><div class="spinner"></div></td></tr></tbody>
             </table>
           </div>
         </div>
       </div>
-
-      <!-- Task Modal -->
-      <div id="taskModal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;">
+      <div id="taskModal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.6);align-items:center;justify-content:center;">
         <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;width:440px;max-width:95vw;">
-          <div style="font-family:var(--font-en);font-weight:700;font-size:16px;margin-bottom:16px;">
-            <span id="taskModalTitle">নতুন টাস্ক</span>
-          </div>
+          <div style="font-family:var(--font-en);font-weight:700;font-size:16px;margin-bottom:16px;"><span id="taskModalTitle">নতুন টাস্ক</span></div>
           <input type="hidden" id="taskEditKey">
           <div class="form-grid" style="gap:10px;">
-            <div class="form-group">
-              <label>আইকন (ইমোজি)</label>
-              <input type="text" id="t_icon" placeholder="📢" maxlength="4">
-            </div>
-            <div class="form-group">
-              <label>রিওয়ার্ড (৳)</label>
-              <input type="number" id="t_reward" placeholder="10" min="0">
-            </div>
-            <div class="form-group full">
-              <label>টাস্কের নাম</label>
-              <input type="text" id="t_name" placeholder="চ্যানেল জয়েন করুন">
-            </div>
-            <div class="form-group full">
-              <label>বিবরণ</label>
-              <input type="text" id="t_desc" placeholder="টেলিগ্রাম চ্যানেল সাবস্ক্রাইব করুন">
-            </div>
-            <div class="form-group full">
-              <label>লিংক</label>
-              <input type="url" id="t_link" placeholder="https://t.me/...">
-            </div>
+            <div class="form-group"><label>আইকন (ইমোজি)</label><input type="text" id="t_icon" placeholder="📢" maxlength="4"></div>
+            <div class="form-group"><label>রিওয়ার্ড (৳)</label><input type="number" id="t_reward" placeholder="10" min="0"></div>
+            <div class="form-group full"><label>টাস্কের নাম</label><input type="text" id="t_name" placeholder="চ্যানেল জয়েন করুন"></div>
+            <div class="form-group full"><label>বিবরণ</label><input type="text" id="t_desc" placeholder="টেলিগ্রাম চ্যানেল সাবস্ক্রাইব করুন"></div>
+            <div class="form-group full"><label>লিংক</label><input type="url" id="t_link" placeholder="https://t.me/..."></div>
           </div>
           <div style="display:flex;gap:8px;margin-top:16px;justify-content:flex-end;">
             <button class="btn btn-ghost" onclick="closeTaskModal()">বাতিল</button>
@@ -537,27 +327,19 @@ input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--bl
       </div>
     </div>
 
-    <!-- ════ HELP ITEMS ════ -->
+    <!-- HELP ITEMS -->
     <div class="panel-page" id="pg-help">
       <div class="page-header">
         <div class="page-title">❓ সাহায্য আইটেম</div>
         <button class="btn btn-primary" onclick="openHelpModal()">➕ নতুন প্রশ্ন</button>
       </div>
       <div id="helpList"></div>
-
-      <!-- Help Modal -->
       <div id="helpModal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.6);align-items:center;justify-content:center;">
         <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;width:480px;max-width:95vw;">
           <div style="font-family:var(--font-en);font-weight:700;font-size:16px;margin-bottom:16px;">সাহায্য আইটেম</div>
           <input type="hidden" id="helpEditKey">
-          <div class="form-group" style="margin-bottom:10px;">
-            <label>প্রশ্ন</label>
-            <input type="text" id="h_q" placeholder="কীভাবে আয় করবো?">
-          </div>
-          <div class="form-group" style="margin-bottom:16px;">
-            <label>উত্তর</label>
-            <textarea id="h_a" placeholder="বিস্তারিত উত্তর লিখুন..."></textarea>
-          </div>
+          <div class="form-group" style="margin-bottom:10px;"><label>প্রশ্ন</label><input type="text" id="h_q" placeholder="কীভাবে আয় করবো?"></div>
+          <div class="form-group" style="margin-bottom:16px;"><label>উত্তর</label><textarea id="h_a" placeholder="বিস্তারিত উত্তর লিখুন..."></textarea></div>
           <div style="display:flex;gap:8px;justify-content:flex-end;">
             <button class="btn btn-ghost" onclick="closeHelpModal()">বাতিল</button>
             <button class="btn btn-primary" onclick="saveHelp()">💾 সেভ করুন</button>
@@ -566,119 +348,88 @@ input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--bl
       </div>
     </div>
 
-  </div><!-- /main -->
-</div><!-- /layout -->
+  </div>
+</div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-/* ══════════════════════════════════════
-   HELPERS
-══════════════════════════════════════ */
-function dbRef(p)     { return window._ref(window._db, p); }
-function dbGet(p)     { return window._get(dbRef(p)); }
-function dbSet(p,v)   { return window._set(dbRef(p), v); }
-function dbUpdate(p,v){ return window._update(dbRef(p), v); }
-function dbPush(p,v)  { return window._push(dbRef(p), v); }
-function dbRemove(p)  { return window._remove(dbRef(p)); }
+/* ══ HELPERS ══ */
+function dbRef(p)      { return window._ref(window._db, p); }
+function dbGet(p)      { return window._get(dbRef(p)); }
+function dbSet(p,v)    { return window._set(dbRef(p), v); }
+function dbUpdate(p,v) { return window._update(dbRef(p), v); }
+function dbPush(p,v)   { return window._push(dbRef(p), v); }
+function dbRemove(p)   { return window._remove(dbRef(p)); }
 
-function showToast(msg, type='') {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = `toast ${type}`;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
+function showToast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className=`toast ${type}`;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+function fmtDate(ts){return ts?new Date(ts).toLocaleDateString('bn-BD',{day:'2-digit',month:'2-digit',year:'numeric'}):'—';}
 
-function fmtDate(ts) {
-  return ts ? new Date(ts).toLocaleDateString('bn-BD', {day:'2-digit',month:'2-digit',year:'numeric'}) : '—';
-}
-
-/* ══════════════════════════════════════
-   LOGIN
-══════════════════════════════════════ */
-const ADMIN_PASS_KEY = 'coinsx_admin_pass';
+/* ══ LOGIN ══ */
 let adminPassHash = '';
 
-document.addEventListener('firebaseReady', async () => {
-  const snap = await dbGet('admin/creds');
-  if (snap.exists() && snap.val().password) {
-    adminPassHash = snap.val().password;
-  } else {
-    // default password: admin123
-    adminPassHash = 'admin123';
-    await dbSet('admin/creds', { password: 'admin123' });
-  }
-});
-
-function doLogin() {
-  const pass = document.getElementById('loginPass').value;
-  if (pass === adminPassHash) {
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('mainApp').style.display = 'flex';
-    loadDashboard();
-    loadWithdrawals();
-    loadUsers();
-    loadConfig();
-    loadTasks();
-    loadHelp();
-  } else {
-    document.getElementById('loginErr').style.display = 'block';
+async function initAdmin() {
+  try {
+    const snap = await dbGet('admin/creds');
+    if (snap.exists() && snap.val().password) {
+      adminPassHash = snap.val().password;
+    } else {
+      adminPassHash = 'admin123';
+      await dbSet('admin/creds', { password: 'admin123' });
+    }
+    document.getElementById('loginLoading').textContent = '✅ Firebase সংযুক্ত';
+  } catch(e) {
+    document.getElementById('loginLoading').textContent = '❌ Firebase সংযোগ ব্যর্থ';
   }
 }
 
-function logout() {
-  document.getElementById('loginScreen').style.display = 'flex';
-  document.getElementById('mainApp').style.display = 'none';
-  document.getElementById('loginPass').value = '';
+/* ── FIX: same pattern as user app ── */
+function onFirebaseReady() { initAdmin(); }
+if (window._firebaseReady) {
+  onFirebaseReady();
+} else {
+  document.addEventListener('firebaseReady', onFirebaseReady, { once: true });
 }
 
-/* ══════════════════════════════════════
-   NAV
-══════════════════════════════════════ */
-function showPage(name) {
-  document.querySelectorAll('.panel-page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+function doLogin(){
+  const pass=document.getElementById('loginPass').value;
+  if(!adminPassHash){showToast('Firebase এখনো লোড হয়নি','error');return;}
+  if(pass===adminPassHash){
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('mainApp').style.display='flex';
+    loadDashboard();loadWithdrawals();loadUsers();loadConfig();loadTasks();loadHelp();
+  } else {
+    document.getElementById('loginErr').style.display='block';
+  }
+}
+function logout(){document.getElementById('loginScreen').style.display='flex';document.getElementById('mainApp').style.display='none';document.getElementById('loginPass').value='';}
+
+/* ══ NAV ══ */
+function showPage(name, evt) {
+  document.querySelectorAll('.panel-page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById(`pg-${name}`).classList.add('active');
-  event.currentTarget.classList.add('active');
+  if(evt) evt.currentTarget.classList.add('active');
 }
 
-/* ══════════════════════════════════════
-   DASHBOARD
-══════════════════════════════════════ */
-async function loadDashboard() {
-  const [usersSnap, wSnap] = await Promise.all([dbGet('users'), dbGet('withdrawals')]);
+/* ══ DASHBOARD ══ */
+async function loadDashboard(){
+  const [usersSnap,wSnap]=await Promise.all([dbGet('users'),dbGet('withdrawals')]);
+  let totalUsers=0,totalPaid=0,pendingCount=0,totalRefer=0;
+  if(usersSnap.exists()){const u=usersSnap.val();totalUsers=Object.keys(u).length;Object.values(u).forEach(user=>{totalRefer+=(user.referCount||0);});}
+  if(wSnap.exists()){Object.values(wSnap.val()).forEach(w=>{if(w.status==='approved')totalPaid+=(w.amount||0);if(w.status==='pending')pendingCount++;});}
+  document.getElementById('statUsers').textContent=totalUsers;
+  document.getElementById('statPaid').textContent=`৳${totalPaid.toFixed(2)}`;
+  document.getElementById('statPending').textContent=pendingCount;
+  document.getElementById('statRefer').textContent=totalRefer;
 
-  let totalUsers = 0, totalPaid = 0, pendingCount = 0, totalRefer = 0;
-  if (usersSnap.exists()) {
-    const u = usersSnap.val();
-    totalUsers = Object.keys(u).length;
-    Object.values(u).forEach(user => { totalRefer += (user.referCount || 0); });
-  }
-  if (wSnap.exists()) {
-    Object.values(wSnap.val()).forEach(w => {
-      if (w.status === 'approved') totalPaid += (w.amount || 0);
-      if (w.status === 'pending') pendingCount++;
-    });
-  }
-
-  document.getElementById('statUsers').textContent = totalUsers;
-  document.getElementById('statPaid').textContent = `৳${totalPaid.toFixed(2)}`;
-  document.getElementById('statPending').textContent = pendingCount;
-  document.getElementById('statRefer').textContent = totalRefer;
-
-  // recent pending
-  const tbody = document.getElementById('recentWithdrawals');
-  if (!wSnap.exists()) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text2);padding:20px;">কোনো রিকোয়েস্ট নেই</td></tr>'; return; }
-  const pending = Object.entries(wSnap.val())
-    .filter(([,v]) => v.status === 'pending')
-    .sort(([,a],[,b]) => b.requestedAt - a.requestedAt)
-    .slice(0, 10);
-  if (pending.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text2);padding:20px;">কোনো পেন্ডিং নেই</td></tr>'; return; }
-  tbody.innerHTML = pending.map(([k,v]) => `
+  const tbody=document.getElementById('recentWithdrawals');
+  if(!wSnap.exists()){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text2);padding:20px;">কোনো রিকোয়েস্ট নেই</td></tr>';return;}
+  const pending=Object.entries(wSnap.val()).filter(([,v])=>v.status==='pending').sort(([,a],[,b])=>b.requestedAt-a.requestedAt).slice(0,10);
+  if(pending.length===0){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text2);padding:20px;">কোনো পেন্ডিং নেই</td></tr>';return;}
+  tbody.innerHTML=pending.map(([k,v])=>`
     <tr>
-      <td>${v.name || v.uid}</td>
+      <td>${v.name||v.uid}</td>
       <td><span class="badge badge-blue">${v.method?.toUpperCase()}</span></td>
       <td style="font-family:var(--font-en)">${v.number}</td>
       <td style="color:var(--gold);font-family:var(--font-en);font-weight:700">৳${Number(v.amount).toFixed(2)}</td>
@@ -687,240 +438,125 @@ async function loadDashboard() {
         <button class="btn btn-green btn-sm" onclick="approveWithdrawal('${k}','${v.uid}',${v.amount})">✅</button>
         <button class="btn btn-red btn-sm" onclick="rejectWithdrawal('${k}','${v.uid}',${v.amount})">❌</button>
       </td>
-    </tr>
-  `).join('');
+    </tr>`).join('');
 }
 
-/* ══════════════════════════════════════
-   WITHDRAWALS
-══════════════════════════════════════ */
-let allWithdrawals = {};
-
-async function loadWithdrawals() {
-  const tbody = document.getElementById('withdrawalTable');
-  tbody.innerHTML = '<tr class="loader-row"><td colspan="8"><div class="spinner"></div></td></tr>';
-  const snap = await dbGet('withdrawals');
-  allWithdrawals = {};
-  if (snap.exists()) allWithdrawals = snap.val();
+/* ══ WITHDRAWALS ══ */
+let allWithdrawals={};
+async function loadWithdrawals(){
+  const tbody=document.getElementById('withdrawalTable');
+  tbody.innerHTML='<tr class="loader-row"><td colspan="8"><div class="spinner"></div></td></tr>';
+  const snap=await dbGet('withdrawals');
+  allWithdrawals=snap.exists()?snap.val():{};
   renderWithdrawals();
 }
-
-function renderWithdrawals() {
-  const filter = document.getElementById('wFilter').value;
-  const tbody = document.getElementById('withdrawalTable');
-  const entries = Object.entries(allWithdrawals)
-    .filter(([,v]) => filter === 'all' || v.status === filter)
-    .sort(([,a],[,b]) => b.requestedAt - a.requestedAt);
-
-  if (entries.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text2);padding:30px;">কোনো রিকোয়েস্ট নেই</td></tr>';
-    return;
-  }
-  tbody.innerHTML = entries.map(([k,v]) => `
+function renderWithdrawals(){
+  const filter=document.getElementById('wFilter').value;
+  const tbody=document.getElementById('withdrawalTable');
+  const entries=Object.entries(allWithdrawals).filter(([,v])=>filter==='all'||v.status===filter).sort(([,a],[,b])=>b.requestedAt-a.requestedAt);
+  if(entries.length===0){tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--text2);padding:30px;">কোনো রিকোয়েস্ট নেই</td></tr>';return;}
+  tbody.innerHTML=entries.map(([k,v])=>`
     <tr>
       <td class="row-check"><input type="checkbox" class="w-check" data-key="${k}" data-uid="${v.uid}" data-amount="${v.amount}" onchange="updateBulkBar()"></td>
-      <td>
-        <div style="font-weight:600">${v.name || '—'}</div>
-        <div style="font-size:11px;color:var(--text2);font-family:var(--font-en)">${v.uid}</div>
-      </td>
+      <td><div style="font-weight:600">${v.name||'—'}</div><div style="font-size:11px;color:var(--text2);font-family:var(--font-en)">${v.uid}</div></td>
       <td><span class="badge badge-blue">${v.method?.toUpperCase()}</span></td>
       <td style="font-family:var(--font-en)">${v.number}</td>
       <td style="color:var(--gold);font-family:var(--font-en);font-weight:700">৳${Number(v.amount).toFixed(2)}</td>
       <td>${fmtDate(v.requestedAt)}</td>
       <td><span class="pill pill-${v.status}">${{pending:'পেন্ডিং',approved:'অনুমোদিত',rejected:'বাতিল'}[v.status]||v.status}</span></td>
-      <td class="td-actions">
-        ${v.status === 'pending' ? `
-          <button class="btn btn-green btn-sm" onclick="approveWithdrawal('${k}','${v.uid}',${v.amount})">✅ অনুমোদন</button>
-          <button class="btn btn-red btn-sm" onclick="rejectWithdrawal('${k}','${v.uid}',${v.amount})">❌ বাতিল</button>
-        ` : '—'}
+      <td class="td-actions">${v.status==='pending'?`
+        <button class="btn btn-green btn-sm" onclick="approveWithdrawal('${k}','${v.uid}',${v.amount})">✅ অনুমোদন</button>
+        <button class="btn btn-red btn-sm" onclick="rejectWithdrawal('${k}','${v.uid}',${v.amount})">❌ বাতিল</button>`:'—'}
       </td>
-    </tr>
-  `).join('');
+    </tr>`).join('');
 }
 
-async function approveWithdrawal(key, uid, amount) {
-  if (!confirm('এই উইথড্র অনুমোদন করবেন?')) return;
-  await dbUpdate(`withdrawals/${key}`, { status: 'approved', processedAt: Date.now() });
-  showToast('উইথড্র অনুমোদিত হয়েছে ✅', 'success');
-  loadWithdrawals(); loadDashboard();
+async function approveWithdrawal(key,uid,amount){
+  if(!confirm('এই উইথড্র অনুমোদন করবেন?'))return;
+  await dbUpdate(`withdrawals/${key}`,{status:'approved',processedAt:Date.now()});
+  showToast('উইথড্র অনুমোদিত হয়েছে ✅','success');
+  loadWithdrawals();loadDashboard();
+}
+async function rejectWithdrawal(key,uid,amount){
+  if(!confirm('এই উইথড্র বাতিল করবেন? ব্যালেন্স ফেরত দেওয়া হবে।'))return;
+  const uSnap=await dbGet(`users/${uid}`);
+  if(uSnap.exists()){const cur=uSnap.val().balance||0;await dbUpdate(`users/${uid}`,{balance:cur+Number(amount)});}
+  await dbUpdate(`withdrawals/${key}`,{status:'rejected',processedAt:Date.now()});
+  showToast('উইথড্র বাতিল ও ব্যালেন্স ফেরত দেওয়া হয়েছে','error');
+  loadWithdrawals();loadDashboard();
 }
 
-async function rejectWithdrawal(key, uid, amount) {
-  if (!confirm('এই উইথড্র বাতিল করবেন? ব্যালেন্স ফেরত দেওয়া হবে।')) return;
-  // refund
-  const uSnap = await dbGet(`users/${uid}`);
-  if (uSnap.exists()) {
-    const cur = uSnap.val().balance || 0;
-    await dbUpdate(`users/${uid}`, { balance: cur + Number(amount) });
-  }
-  await dbUpdate(`withdrawals/${key}`, { status: 'rejected', processedAt: Date.now() });
-  showToast('উইথড্র বাতিল ও ব্যালেন্স ফেরত দেওয়া হয়েছে', 'error');
-  loadWithdrawals(); loadDashboard();
-}
+function updateBulkBar(){const checked=document.querySelectorAll('.w-check:checked').length;const bar=document.getElementById('bulkBar');bar.classList.toggle('visible',checked>0);document.getElementById('selectedCount').textContent=`${checked} সিলেক্ট`;}
+function toggleAll(el){document.querySelectorAll('.w-check').forEach(c=>{c.checked=el.checked;});updateBulkBar();}
+async function bulkApprove(){const checks=[...document.querySelectorAll('.w-check:checked')];if(checks.length===0)return;if(!confirm(`${checks.length} টি উইথড্র অনুমোদন করবেন?`))return;for(const c of checks){await dbUpdate(`withdrawals/${c.dataset.key}`,{status:'approved',processedAt:Date.now()});}showToast(`${checks.length} টি অনুমোদিত ✅`,'success');loadWithdrawals();loadDashboard();}
+async function bulkReject(){const checks=[...document.querySelectorAll('.w-check:checked')];if(checks.length===0)return;if(!confirm(`${checks.length} টি বাতিল করবেন?`))return;for(const c of checks){const uSnap=await dbGet(`users/${c.dataset.uid}`);if(uSnap.exists()){const cur=uSnap.val().balance||0;await dbUpdate(`users/${c.dataset.uid}`,{balance:cur+Number(c.dataset.amount)});}await dbUpdate(`withdrawals/${c.dataset.key}`,{status:'rejected',processedAt:Date.now()});}showToast(`${checks.length} টি বাতিল ✅`,'error');loadWithdrawals();loadDashboard();}
 
-function updateBulkBar() {
-  const checked = document.querySelectorAll('.w-check:checked').length;
-  const bar = document.getElementById('bulkBar');
-  bar.classList.toggle('visible', checked > 0);
-  document.getElementById('selectedCount').textContent = `${checked} সিলেক্ট`;
-}
-
-function toggleAll(el) {
-  document.querySelectorAll('.w-check').forEach(c => { c.checked = el.checked; });
-  updateBulkBar();
-}
-
-async function bulkApprove() {
-  const checks = [...document.querySelectorAll('.w-check:checked')];
-  if (checks.length === 0) return;
-  if (!confirm(`${checks.length} টি উইথড্র অনুমোদন করবেন?`)) return;
-  for (const c of checks) {
-    await dbUpdate(`withdrawals/${c.dataset.key}`, { status: 'approved', processedAt: Date.now() });
-  }
-  showToast(`${checks.length} টি অনুমোদিত ✅`, 'success');
-  loadWithdrawals(); loadDashboard();
-}
-
-async function bulkReject() {
-  const checks = [...document.querySelectorAll('.w-check:checked')];
-  if (checks.length === 0) return;
-  if (!confirm(`${checks.length} টি বাতিল করবেন? ব্যালেন্স ফেরত যাবে।`)) return;
-  for (const c of checks) {
-    const uSnap = await dbGet(`users/${c.dataset.uid}`);
-    if (uSnap.exists()) {
-      const cur = uSnap.val().balance || 0;
-      await dbUpdate(`users/${c.dataset.uid}`, { balance: cur + Number(c.dataset.amount) });
-    }
-    await dbUpdate(`withdrawals/${c.dataset.key}`, { status: 'rejected', processedAt: Date.now() });
-  }
-  showToast(`${checks.length} টি বাতিল ও ব্যালেন্স ফেরত ✅`, 'error');
-  loadWithdrawals(); loadDashboard();
-}
-
-/* ══════════════════════════════════════
-   USERS
-══════════════════════════════════════ */
-let allUsers = {};
-
-async function loadUsers() {
-  const tbody = document.getElementById('userTable');
-  tbody.innerHTML = '<tr class="loader-row"><td colspan="8"><div class="spinner"></div></td></tr>';
-  const snap = await dbGet('users');
-  allUsers = snap.exists() ? snap.val() : {};
-  filterUsers();
-}
-
-function filterUsers() {
-  const q = document.getElementById('userSearch').value.toLowerCase();
-  const entries = Object.entries(allUsers)
-    .filter(([uid,u]) => !q || u.name?.toLowerCase().includes(q) || uid.includes(q))
-    .sort(([,a],[,b]) => (b.totalEarned||0) - (a.totalEarned||0));
-
-  const tbody = document.getElementById('userTable');
-  if (entries.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text2);padding:30px;">কোনো ইউজার নেই</td></tr>';
-    return;
-  }
-  tbody.innerHTML = entries.map(([uid,u]) => `
+/* ══ USERS ══ */
+let allUsers={};
+async function loadUsers(){const tbody=document.getElementById('userTable');tbody.innerHTML='<tr class="loader-row"><td colspan="8"><div class="spinner"></div></td></tr>';const snap=await dbGet('users');allUsers=snap.exists()?snap.val():{};filterUsers();}
+function filterUsers(){
+  const q=document.getElementById('userSearch').value.toLowerCase();
+  const entries=Object.entries(allUsers).filter(([uid,u])=>!q||u.name?.toLowerCase().includes(q)||uid.includes(q)).sort(([,a],[,b])=>(b.totalEarned||0)-(a.totalEarned||0));
+  const tbody=document.getElementById('userTable');
+  if(entries.length===0){tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--text2);padding:30px;">কোনো ইউজার নেই</td></tr>';return;}
+  tbody.innerHTML=entries.map(([uid,u])=>`
     <tr>
-      <td>
-        <div style="font-weight:600">${u.name || '—'}</div>
-        <div style="font-size:11px;color:var(--text2)">@${u.username || '—'}</div>
-      </td>
+      <td><div style="font-weight:600">${u.name||'—'}</div><div style="font-size:11px;color:var(--text2)">@${u.username||'—'}</div></td>
       <td style="font-family:var(--font-en);font-size:12px">${uid}</td>
       <td style="color:var(--gold);font-family:var(--font-en);font-weight:700">৳${Number(u.balance||0).toFixed(2)}</td>
       <td style="font-family:var(--font-en)">৳${Number(u.totalEarned||0).toFixed(2)}</td>
-      <td>${u.referCount || 0}</td>
+      <td>${u.referCount||0}</td>
       <td>${fmtDate(u.joinedAt)}</td>
-      <td><span class="pill ${u.blocked ? 'pill-blocked' : 'pill-active'}">${u.blocked ? 'ব্লক' : 'সক্রিয়'}</span></td>
+      <td><span class="pill ${u.blocked?'pill-blocked':'pill-active'}">${u.blocked?'ব্লক':'সক্রিয়'}</span></td>
       <td class="td-actions">
-        ${u.blocked
-          ? `<button class="btn btn-green btn-sm" onclick="toggleBlock('${uid}',false)">✅ আনব্লক</button>`
-          : `<button class="btn btn-red btn-sm" onclick="toggleBlock('${uid}',true)">🚫 ব্লক</button>`
-        }
+        ${u.blocked?`<button class="btn btn-green btn-sm" onclick="toggleBlock('${uid}',false)">✅ আনব্লক</button>`:`<button class="btn btn-red btn-sm" onclick="toggleBlock('${uid}',true)">🚫 ব্লক</button>`}
         <button class="btn btn-ghost btn-sm" onclick="editUserBalance('${uid}',${u.balance||0})">💰</button>
         <button class="btn btn-red btn-sm" onclick="deleteUser('${uid}')">🗑️</button>
       </td>
-    </tr>
-  `).join('');
+    </tr>`).join('');
 }
+async function toggleBlock(uid,block){await dbUpdate(`users/${uid}`,{blocked:block});showToast(block?'ইউজার ব্লক করা হয়েছে':'ইউজার আনব্লক করা হয়েছে',block?'error':'success');loadUsers();}
+async function editUserBalance(uid,cur){const val=prompt(`বর্তমান ব্যালেন্স: ৳${cur}\nনতুন ব্যালেন্স লিখুন:`);if(val===null)return;const newBal=parseFloat(val);if(isNaN(newBal)){showToast('সঠিক মান দিন','error');return;}await dbUpdate(`users/${uid}`,{balance:newBal});showToast('ব্যালেন্স আপডেট হয়েছে ✅','success');loadUsers();}
+async function deleteUser(uid){if(!confirm('এই ইউজার মুছে ফেলবেন?'))return;await dbRemove(`users/${uid}`);showToast('ইউজার মুছে ফেলা হয়েছে','error');loadUsers();}
 
-async function toggleBlock(uid, block) {
-  await dbUpdate(`users/${uid}`, { blocked: block });
-  showToast(block ? 'ইউজার ব্লক করা হয়েছে' : 'ইউজার আনব্লক করা হয়েছে', block ? 'error' : 'success');
-  loadUsers();
+/* ══ CONFIG ══ */
+async function loadConfig(){
+  const snap=await dbGet('config');if(!snap.exists())return;const c=snap.val();
+  document.getElementById('cfg_ad1Link').value=c.ad1Link||'';
+  document.getElementById('cfg_ad1Earn').value=c.ad1Earn||0.5;
+  document.getElementById('cfg_ad1Cooldown').value=c.ad1Cooldown||60;
+  document.getElementById('cfg_ad2Zone').value=c.ad2Zone||'';
+  document.getElementById('cfg_ad2Earn').value=c.ad2Earn||1.0;
+  document.getElementById('cfg_ad2Cooldown').value=c.ad2Cooldown||120;
+  document.getElementById('cfg_minWithdraw').value=c.minWithdraw||50;
+  document.getElementById('cfg_referEarn').value=c.referEarn||5;
+  document.getElementById('cfg_supportLink').value=c.supportLink||'';
 }
-
-async function editUserBalance(uid, cur) {
-  const val = prompt(`বর্তমান ব্যালেন্স: ৳${cur}\nনতুন ব্যালেন্স লিখুন:`);
-  if (val === null) return;
-  const newBal = parseFloat(val);
-  if (isNaN(newBal)) { showToast('সঠিক মান দিন', 'error'); return; }
-  await dbUpdate(`users/${uid}`, { balance: newBal });
-  showToast('ব্যালেন্স আপডেট হয়েছে ✅', 'success');
-  loadUsers();
-}
-
-async function deleteUser(uid) {
-  if (!confirm('এই ইউজার মুছে ফেলবেন? এটি পূর্বাবস্থায় ফেরানো যাবে না!')) return;
-  await dbRemove(`users/${uid}`);
-  showToast('ইউজার মুছে ফেলা হয়েছে', 'error');
-  loadUsers();
-}
-
-/* ══════════════════════════════════════
-   CONFIG
-══════════════════════════════════════ */
-async function loadConfig() {
-  const snap = await dbGet('config');
-  if (!snap.exists()) return;
-  const c = snap.val();
-  document.getElementById('cfg_ad1Link').value     = c.ad1Link || '';
-  document.getElementById('cfg_ad1Earn').value     = c.ad1Earn || 0.5;
-  document.getElementById('cfg_ad1Cooldown').value = c.ad1Cooldown || 60;
-  document.getElementById('cfg_ad2Zone').value     = c.ad2Zone || '';
-  document.getElementById('cfg_ad2Earn').value     = c.ad2Earn || 1.0;
-  document.getElementById('cfg_ad2Cooldown').value = c.ad2Cooldown || 120;
-  document.getElementById('cfg_minWithdraw').value = c.minWithdraw || 50;
-  document.getElementById('cfg_referEarn').value   = c.referEarn || 5;
-  document.getElementById('cfg_supportLink').value = c.supportLink || '';
-}
-
-async function saveConfig() {
-  const newPass = document.getElementById('cfg_adminPass').value.trim();
-  const update  = {
-    ad1Link:     document.getElementById('cfg_ad1Link').value.trim(),
-    ad1Earn:     parseFloat(document.getElementById('cfg_ad1Earn').value) || 0.5,
-    ad1Cooldown: parseInt(document.getElementById('cfg_ad1Cooldown').value) || 60,
-    ad2Zone:     document.getElementById('cfg_ad2Zone').value.trim(),
-    ad2Earn:     parseFloat(document.getElementById('cfg_ad2Earn').value) || 1.0,
-    ad2Cooldown: parseInt(document.getElementById('cfg_ad2Cooldown').value) || 120,
-    minWithdraw: parseFloat(document.getElementById('cfg_minWithdraw').value) || 50,
-    referEarn:   parseFloat(document.getElementById('cfg_referEarn').value) || 5,
-    supportLink: document.getElementById('cfg_supportLink').value.trim(),
+async function saveConfig(){
+  const newPass=document.getElementById('cfg_adminPass').value.trim();
+  const upd={
+    ad1Link:document.getElementById('cfg_ad1Link').value.trim(),
+    ad1Earn:parseFloat(document.getElementById('cfg_ad1Earn').value)||0.5,
+    ad1Cooldown:parseInt(document.getElementById('cfg_ad1Cooldown').value)||60,
+    ad2Zone:document.getElementById('cfg_ad2Zone').value.trim(),
+    ad2Earn:parseFloat(document.getElementById('cfg_ad2Earn').value)||1.0,
+    ad2Cooldown:parseInt(document.getElementById('cfg_ad2Cooldown').value)||120,
+    minWithdraw:parseFloat(document.getElementById('cfg_minWithdraw').value)||50,
+    referEarn:parseFloat(document.getElementById('cfg_referEarn').value)||5,
+    supportLink:document.getElementById('cfg_supportLink').value.trim(),
   };
-  await dbUpdate('config', update);
-  if (newPass) {
-    await dbUpdate('admin/creds', { password: newPass });
-    adminPassHash = newPass;
-    document.getElementById('cfg_adminPass').value = '';
-    showToast('পাসওয়ার্ড পরিবর্তিত হয়েছে', 'success');
-  }
-  showToast('কনফিগ সেভ হয়েছে ✅', 'success');
+  await dbUpdate('config',upd);
+  if(newPass){await dbUpdate('admin/creds',{password:newPass});adminPassHash=newPass;document.getElementById('cfg_adminPass').value='';showToast('পাসওয়ার্ড পরিবর্তিত হয়েছে','success');}
+  showToast('কনফিগ সেভ হয়েছে ✅','success');
 }
 
-/* ══════════════════════════════════════
-   TASKS
-══════════════════════════════════════ */
-async function loadTasks() {
-  const tbody = document.getElementById('taskTable');
-  const snap = await dbGet('config/tasks');
-  if (!snap.exists()) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text2);padding:20px;">কোনো টাস্ক নেই</td></tr>';
-    return;
-  }
-  const tasks = snap.val();
-  tbody.innerHTML = Object.entries(tasks).map(([k,t]) => `
+/* ══ TASKS ══ */
+async function loadTasks(){
+  const tbody=document.getElementById('taskTable');
+  const snap=await dbGet('config/tasks');
+  if(!snap.exists()){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text2);padding:20px;">কোনো টাস্ক নেই</td></tr>';return;}
+  const tasks=snap.val();
+  tbody.innerHTML=Object.entries(tasks).map(([k,t])=>`
     <tr>
       <td style="font-size:22px">${t.icon||'✅'}</td>
       <td style="font-weight:600">${t.name}</td>
@@ -931,110 +567,50 @@ async function loadTasks() {
         <button class="btn btn-ghost btn-sm" onclick="openTaskModal('${k}')">✏️</button>
         <button class="btn btn-red btn-sm" onclick="deleteTask('${k}')">🗑️</button>
       </td>
-    </tr>
-  `).join('');
+    </tr>`).join('');
 }
-
-function openTaskModal(key='') {
-  const modal = document.getElementById('taskModal');
-  modal.style.display = 'flex';
-  document.getElementById('taskEditKey').value = key;
-  document.getElementById('taskModalTitle').textContent = key ? 'টাস্ক সম্পাদনা' : 'নতুন টাস্ক';
-
-  if (key) {
-    dbGet(`config/tasks/${key}`).then(snap => {
-      if (!snap.exists()) return;
-      const t = snap.val();
-      document.getElementById('t_icon').value   = t.icon || '';
-      document.getElementById('t_name').value   = t.name || '';
-      document.getElementById('t_desc').value   = t.desc || '';
-      document.getElementById('t_reward').value = t.reward || '';
-      document.getElementById('t_link').value   = t.link || '';
-    });
-  } else {
-    ['t_icon','t_name','t_desc','t_reward','t_link'].forEach(id => document.getElementById(id).value = '');
-  }
+function openTaskModal(key=''){
+  const modal=document.getElementById('taskModal');modal.style.display='flex';
+  document.getElementById('taskEditKey').value=key;
+  document.getElementById('taskModalTitle').textContent=key?'টাস্ক সম্পাদনা':'নতুন টাস্ক';
+  if(key){dbGet(`config/tasks/${key}`).then(snap=>{if(!snap.exists())return;const t=snap.val();document.getElementById('t_icon').value=t.icon||'';document.getElementById('t_name').value=t.name||'';document.getElementById('t_desc').value=t.desc||'';document.getElementById('t_reward').value=t.reward||'';document.getElementById('t_link').value=t.link||'';});}
+  else{['t_icon','t_name','t_desc','t_reward','t_link'].forEach(id=>document.getElementById(id).value='');}
 }
-function closeTaskModal() { document.getElementById('taskModal').style.display = 'none'; }
-
-async function saveTask() {
-  const key = document.getElementById('taskEditKey').value;
-  const task = {
-    icon:   document.getElementById('t_icon').value.trim() || '✅',
-    name:   document.getElementById('t_name').value.trim(),
-    desc:   document.getElementById('t_desc').value.trim(),
-    reward: parseFloat(document.getElementById('t_reward').value) || 0,
-    link:   document.getElementById('t_link').value.trim(),
-  };
-  if (!task.name) { showToast('নাম দিন', 'error'); return; }
-  const path = `config/tasks/${key || ('t' + Date.now())}`;
-  await dbSet(path, task);
-  showToast('টাস্ক সেভ হয়েছে ✅', 'success');
-  closeTaskModal(); loadTasks();
+function closeTaskModal(){document.getElementById('taskModal').style.display='none';}
+async function saveTask(){
+  const key=document.getElementById('taskEditKey').value;
+  const task={icon:document.getElementById('t_icon').value.trim()||'✅',name:document.getElementById('t_name').value.trim(),desc:document.getElementById('t_desc').value.trim(),reward:parseFloat(document.getElementById('t_reward').value)||0,link:document.getElementById('t_link').value.trim()};
+  if(!task.name){showToast('নাম দিন','error');return;}
+  await dbSet(`config/tasks/${key||('t'+Date.now())}`,task);
+  showToast('টাস্ক সেভ হয়েছে ✅','success');closeTaskModal();loadTasks();
 }
+async function deleteTask(key){if(!confirm('টাস্ক মুছে ফেলবেন?'))return;await dbRemove(`config/tasks/${key}`);showToast('টাস্ক মুছে ফেলা হয়েছে','error');loadTasks();}
 
-async function deleteTask(key) {
-  if (!confirm('টাস্ক মুছে ফেলবেন?')) return;
-  await dbRemove(`config/tasks/${key}`);
-  showToast('টাস্ক মুছে ফেলা হয়েছে', 'error');
-  loadTasks();
-}
-
-/* ══════════════════════════════════════
-   HELP ITEMS
-══════════════════════════════════════ */
-async function loadHelp() {
-  const snap = await dbGet('config/helpItems');
-  const el = document.getElementById('helpList');
-  if (!snap.exists()) { el.innerHTML = '<div style="color:var(--text2);padding:20px;">কোনো আইটেম নেই</div>'; return; }
-  const items = snap.val();
-  el.innerHTML = Object.entries(items).map(([k,it]) => `
+/* ══ HELP ══ */
+async function loadHelp(){
+  const snap=await dbGet('config/helpItems');const el=document.getElementById('helpList');
+  if(!snap.exists()){el.innerHTML='<div style="color:var(--text2);padding:20px;">কোনো আইটেম নেই</div>';return;}
+  const items=snap.val();
+  el.innerHTML=Object.entries(items).map(([k,it])=>`
     <div class="panel" style="margin-bottom:10px;">
-      <div class="panel-head">
-        ${it.q}
+      <div class="panel-head">${it.q}
         <div style="display:flex;gap:6px;">
           <button class="btn btn-ghost btn-sm" onclick="openHelpModal('${k}')">✏️</button>
           <button class="btn btn-red btn-sm" onclick="deleteHelp('${k}')">🗑️</button>
         </div>
       </div>
       <div class="panel-body" style="font-size:13px;color:var(--text2)">${it.a}</div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
-
-function openHelpModal(key='') {
-  const modal = document.getElementById('helpModal');
-  modal.style.display = 'flex';
-  document.getElementById('helpEditKey').value = key;
-  if (key) {
-    dbGet(`config/helpItems/${key}`).then(snap => {
-      if (!snap.exists()) return;
-      document.getElementById('h_q').value = snap.val().q || '';
-      document.getElementById('h_a').value = snap.val().a || '';
-    });
-  } else {
-    document.getElementById('h_q').value = '';
-    document.getElementById('h_a').value = '';
-  }
+function openHelpModal(key=''){
+  const modal=document.getElementById('helpModal');modal.style.display='flex';
+  document.getElementById('helpEditKey').value=key;
+  if(key){dbGet(`config/helpItems/${key}`).then(snap=>{if(!snap.exists())return;document.getElementById('h_q').value=snap.val().q||'';document.getElementById('h_a').value=snap.val().a||'';});}
+  else{document.getElementById('h_q').value='';document.getElementById('h_a').value='';}
 }
-function closeHelpModal() { document.getElementById('helpModal').style.display = 'none'; }
-
-async function saveHelp() {
-  const key = document.getElementById('helpEditKey').value;
-  const q = document.getElementById('h_q').value.trim();
-  const a = document.getElementById('h_a').value.trim();
-  if (!q || !a) { showToast('প্রশ্ন ও উত্তর দিন', 'error'); return; }
-  await dbSet(`config/helpItems/${key || ('h' + Date.now())}`, { q, a });
-  showToast('সেভ হয়েছে ✅', 'success');
-  closeHelpModal(); loadHelp();
-}
-
-async function deleteHelp(key) {
-  if (!confirm('মুছে ফেলবেন?')) return;
-  await dbRemove(`config/helpItems/${key}`);
-  showToast('মুছে ফেলা হয়েছে', 'error');
-  loadHelp();
-}
+function closeHelpModal(){document.getElementById('helpModal').style.display='none';}
+async function saveHelp(){const key=document.getElementById('helpEditKey').value;const q=document.getElementById('h_q').value.trim();const a=document.getElementById('h_a').value.trim();if(!q||!a){showToast('প্রশ্ন ও উত্তর দিন','error');return;}await dbSet(`config/helpItems/${key||('h'+Date.now())}`,{q,a});showToast('সেভ হয়েছে ✅','success');closeHelpModal();loadHelp();}
+async function deleteHelp(key){if(!confirm('মুছে ফেলবেন?'))return;await dbRemove(`config/helpItems/${key}`);showToast('মুছে ফেলা হয়েছে','error');loadHelp();}
 </script>
 </body>
 </html>
