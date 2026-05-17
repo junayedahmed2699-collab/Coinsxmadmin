@@ -31,7 +31,6 @@
   window._remove      = remove;
   window._onValue     = onValue;
   window._firebaseReady = true;
-  /* ── KEY FIX ── */
   setTimeout(() => document.dispatchEvent(new Event("firebaseReady")), 0);
 </script>
 
@@ -83,6 +82,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 
 .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
 .form-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.form-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
 .form-group{display:flex;flex-direction:column;gap:6px;}
 .form-group.full{grid-column:1/-1;}
 label{font-size:12px;color:var(--text2);font-weight:600;}
@@ -135,12 +135,17 @@ tr:hover td{background:rgba(255,255,255,.02);}
 @keyframes spin{to{transform:rotate(360deg);}}
 .loader-row td{text-align:center;padding:30px;color:var(--text2);}
 
+/* Ad section separator */
+.ad-section-sep{border:none;border-top:1px dashed var(--border);margin:18px 0;}
+.ad-slot-label{font-size:12px;color:var(--blue);font-weight:700;font-family:var(--font-en);letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.ad-slot-label::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--blue);}
+
 input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--blue);}
 .row-check{width:36px;}
 .bulk-bar{display:none;background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.3);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:12px;align-items:center;gap:10px;font-size:13px;}
 .bulk-bar.visible{display:flex;}
 
-@media(max-width:768px){.sidebar{width:200px;}.main{margin-left:200px;}.stats-grid{grid-template-columns:1fr 1fr;}.form-grid{grid-template-columns:1fr;}.form-grid-3{grid-template-columns:1fr;}}
+@media(max-width:768px){.sidebar{width:200px;}.main{margin-left:200px;}.stats-grid{grid-template-columns:1fr 1fr;}.form-grid{grid-template-columns:1fr;}.form-grid-3{grid-template-columns:1fr;}.form-grid-4{grid-template-columns:1fr 1fr;}}
 @media(max-width:600px){.sidebar{display:none;}.main{margin-left:0;}}
 </style>
 </head>
@@ -264,21 +269,53 @@ input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--bl
         <div class="page-title">⚙️ কনফিগারেশন</div>
         <button class="btn btn-gold" onclick="saveConfig()">💾 সেভ করুন</button>
       </div>
+
+      <!-- AD SLOT 1 -->
       <div class="panel">
-        <div class="panel-head">📺 এড সেটিংস</div>
+        <div class="panel-head">📡 Ad Slot 1 — Adsterra Direct Link</div>
         <div class="panel-body">
-          <div class="form-grid-3" style="margin-bottom:16px;">
-            <div class="form-group"><label>Adsterra Direct Link</label><input type="url" id="cfg_ad1Link" placeholder="https://..."></div>
-            <div class="form-group"><label>Adsterra এড আয় (৳)</label><input type="number" id="cfg_ad1Earn" placeholder="0.50" step="0.01" min="0"></div>
-            <div class="form-group"><label>Adsterra কুলডাউন (সেকেন্ড)</label><input type="number" id="cfg_ad1Cooldown" placeholder="60" min="0"></div>
-          </div>
-          <div class="form-grid-3">
-            <div class="form-group"><label>Monetag Zone ID</label><input type="text" id="cfg_ad2Zone" placeholder="1234567"></div>
-            <div class="form-group"><label>Monetag এড আয় (৳)</label><input type="number" id="cfg_ad2Earn" placeholder="1.00" step="0.01" min="0"></div>
-            <div class="form-group"><label>Monetag কুলডাউন (সেকেন্ড)</label><input type="number" id="cfg_ad2Cooldown" placeholder="120" min="0"></div>
+          <div class="form-grid-4">
+            <div class="form-group full" style="grid-column:span 2">
+              <label>Adsterra Direct Link (Slot 1)</label>
+              <input type="url" id="cfg_ad1Link" placeholder="https://...">
+            </div>
+            <div class="form-group"><label>আয় (৳)</label><input type="number" id="cfg_ad1Earn" placeholder="0.50" step="0.01" min="0"></div>
+            <div class="form-group"><label>কুলডাউন (সেকেন্ড)</label><input type="number" id="cfg_ad1Cooldown" placeholder="60" min="0"></div>
+            <div class="form-group"><label>দৈনিক লিমিট (বার)</label><input type="number" id="cfg_ad1DailyLimit" placeholder="5" min="1"></div>
           </div>
         </div>
       </div>
+
+      <!-- AD SLOT 2 -->
+      <div class="panel">
+        <div class="panel-head">⚡ Ad Slot 2 — Monetag</div>
+        <div class="panel-body">
+          <div class="form-grid-4">
+            <div class="form-group"><label>Monetag Zone ID</label><input type="text" id="cfg_ad2Zone" placeholder="1234567"></div>
+            <div class="form-group"><label>আয় (৳)</label><input type="number" id="cfg_ad2Earn" placeholder="1.00" step="0.01" min="0"></div>
+            <div class="form-group"><label>কুলডাউন (সেকেন্ড)</label><input type="number" id="cfg_ad2Cooldown" placeholder="120" min="0"></div>
+            <div class="form-group"><label>দৈনিক লিমিট (বার)</label><input type="number" id="cfg_ad2DailyLimit" placeholder="5" min="1"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AD SLOT 3 -->
+      <div class="panel">
+        <div class="panel-head">🎯 Ad Slot 3 — Adsterra Direct Link</div>
+        <div class="panel-body">
+          <div class="form-grid-4">
+            <div class="form-group full" style="grid-column:span 2">
+              <label>Adsterra Direct Link (Slot 3)</label>
+              <input type="url" id="cfg_ad3Link" placeholder="https://...">
+            </div>
+            <div class="form-group"><label>আয় (৳)</label><input type="number" id="cfg_ad3Earn" placeholder="0.75" step="0.01" min="0"></div>
+            <div class="form-group"><label>কুলডাউন (সেকেন্ড)</label><input type="number" id="cfg_ad3Cooldown" placeholder="90" min="0"></div>
+            <div class="form-group"><label>দৈনিক লিমিট (বার)</label><input type="number" id="cfg_ad3DailyLimit" placeholder="5" min="1"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GENERAL -->
       <div class="panel">
         <div class="panel-head">🔧 সাধারণ সেটিংস</div>
         <div class="panel-body">
@@ -383,7 +420,6 @@ async function initAdmin() {
   }
 }
 
-/* ── FIX: same pattern as user app ── */
 function onFirebaseReady() { initAdmin(); }
 if (window._firebaseReady) {
   onFirebaseReady();
@@ -525,9 +561,15 @@ async function loadConfig(){
   document.getElementById('cfg_ad1Link').value=c.ad1Link||'';
   document.getElementById('cfg_ad1Earn').value=c.ad1Earn||0.5;
   document.getElementById('cfg_ad1Cooldown').value=c.ad1Cooldown||60;
+  document.getElementById('cfg_ad1DailyLimit').value=c.ad1DailyLimit||5;
   document.getElementById('cfg_ad2Zone').value=c.ad2Zone||'';
   document.getElementById('cfg_ad2Earn').value=c.ad2Earn||1.0;
   document.getElementById('cfg_ad2Cooldown').value=c.ad2Cooldown||120;
+  document.getElementById('cfg_ad2DailyLimit').value=c.ad2DailyLimit||5;
+  document.getElementById('cfg_ad3Link').value=c.ad3Link||'';
+  document.getElementById('cfg_ad3Earn').value=c.ad3Earn||0.75;
+  document.getElementById('cfg_ad3Cooldown').value=c.ad3Cooldown||90;
+  document.getElementById('cfg_ad3DailyLimit').value=c.ad3DailyLimit||5;
   document.getElementById('cfg_minWithdraw').value=c.minWithdraw||50;
   document.getElementById('cfg_referEarn').value=c.referEarn||5;
   document.getElementById('cfg_supportLink').value=c.supportLink||'';
@@ -538,9 +580,15 @@ async function saveConfig(){
     ad1Link:document.getElementById('cfg_ad1Link').value.trim(),
     ad1Earn:parseFloat(document.getElementById('cfg_ad1Earn').value)||0.5,
     ad1Cooldown:parseInt(document.getElementById('cfg_ad1Cooldown').value)||60,
+    ad1DailyLimit:parseInt(document.getElementById('cfg_ad1DailyLimit').value)||5,
     ad2Zone:document.getElementById('cfg_ad2Zone').value.trim(),
     ad2Earn:parseFloat(document.getElementById('cfg_ad2Earn').value)||1.0,
     ad2Cooldown:parseInt(document.getElementById('cfg_ad2Cooldown').value)||120,
+    ad2DailyLimit:parseInt(document.getElementById('cfg_ad2DailyLimit').value)||5,
+    ad3Link:document.getElementById('cfg_ad3Link').value.trim(),
+    ad3Earn:parseFloat(document.getElementById('cfg_ad3Earn').value)||0.75,
+    ad3Cooldown:parseInt(document.getElementById('cfg_ad3Cooldown').value)||90,
+    ad3DailyLimit:parseInt(document.getElementById('cfg_ad3DailyLimit').value)||5,
     minWithdraw:parseFloat(document.getElementById('cfg_minWithdraw').value)||50,
     referEarn:parseFloat(document.getElementById('cfg_referEarn').value)||5,
     supportLink:document.getElementById('cfg_supportLink').value.trim(),
